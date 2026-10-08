@@ -228,13 +228,13 @@ function connect() {
 for (const a of catalog) {
   const b = document.createElement('button');
   b.textContent = `${a.kind === 'splat' ? 'Splat' : 'Model'}: ${a.name}`;
-  b.onclick = () => run(`show_${a.kind}`, { name: a.name }).then(renderStatus, (e) => log(e.message));
+  b.onclick = () => run(`show_${a.kind}`, { name: a.name }).then(() => pushState(), (e) => log(e.message));
   $('demo-buttons').append(b);
 }
 for (const [label, fn] of [['2D', () => run('set_mode', { mode: '2d' })], ['3D', () => run('set_mode', { mode: '3d' })], ['Clear', () => run('clear')]]) {
   const b = document.createElement('button');
   b.textContent = label;
-  b.onclick = () => fn().then(renderStatus, (e) => log(e.message));
+  b.onclick = () => fn().then(() => pushState(), (e) => log(e.message));
   $('demo-buttons').append(b);
 }
 
