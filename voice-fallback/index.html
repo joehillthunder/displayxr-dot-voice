@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DisplayXR voice</title>
+<style>
+  :root { color-scheme: dark; --bg: #0d0e13; --fg: #e8e8ea; --muted: #9a9cab; --ok: #7ee2a4; --err: #fca5a5; --accent: #93c5fd; }
+  html, body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  main { max-width: 720px; margin: 0 auto; padding: 24px 16px; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  .muted { color: var(--muted); }
+  button { font: 14px system-ui; padding: 9px 16px; border-radius: 8px; border: 1px solid #ffffff26; background: #ffffff10; color: var(--fg); cursor: pointer; margin-right: 8px; }
+  button:disabled { opacity: .4; cursor: not-allowed; }
+  #log { margin-top: 18px; font: 13px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; }
+  #log p { margin: 0 0 6px; overflow-wrap: anywhere; }
+  .ok { color: var(--ok); } .err { color: var(--err); } .tool { color: var(--accent); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Voice → 3D display</h1>
+  <p class="muted">A Realtime voice agent with the display's MCP tools. Use this when your dot can't reach a custom MCP plugin yet. Needs <code>OPENAI_API_KEY</code> in <code>.env</code> and a microphone.</p>
+  <p class="muted">MCP tools: <span id="tools">loading…</span></p>
+  <button id="start">Start talking</button><button id="stop" disabled>Stop</button>
+  <div id="log"></div>
+</main>
+<script type="module" src="/client.js"></script>
+</body>
+</html>

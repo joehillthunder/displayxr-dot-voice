@@ -1,0 +1,11 @@
+{
+  "name": "@dxr-dot-voice/voice-fallback",
+  "private": true,
+  "type": "module",
+  "scripts": { "start": "node server.ts" },
+  "dependencies": {
+    "@modelcontextprotocol/client": "^2.3.1",
+    "@openai/agents-realtime": "^0.19.0",
+    "esbuild": "^0.25.0"
+  }
+}
