@@ -1,0 +1,7 @@
+{
+  "name": "@dxr-dot-voice/mock-cli",
+  "private": true,
+  "type": "module",
+  "scripts": { "start": "node cli.ts" },
+  "dependencies": { "@modelcontextprotocol/client": "^2.3.1" }
+}

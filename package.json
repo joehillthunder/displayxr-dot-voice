@@ -1,0 +1,29 @@
+{
+  "name": "displayxr-dot-voice",
+  "private": true,
+  "type": "module",
+  "license": "Apache-2.0",
+  "engines": {
+    "node": ">=24"
+  },
+  "workspaces": [
+    "bridge",
+    "mcp-server",
+    "mock-cli",
+    "voice-fallback"
+  ],
+  "scripts": {
+    "bridge": "npm run start -w bridge",
+    "mcp": "npm run start -w mcp-server",
+    "mock": "npm run start -w mock-cli --",
+    "voice": "npm run start -w voice-fallback",
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "node --test \"test/*.test.ts\""
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^24.0.0",
+    "@types/ws": "^8.5.0",
+    "typescript": "^5.9.0"
+  }
+}

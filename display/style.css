@@ -1,0 +1,47 @@
+:root {
+  color-scheme: dark;
+  --bg: #0d0e13;
+  --fg: #e8e8ea;
+  --muted: #9a9cab;
+  --ok: #7ee2a4;
+  --warn: #e6c07a;
+  --err: #fca5a5;
+  --accent: #5aa8ff;
+}
+html, body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.55 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 1100px; margin: 0 auto; padding: 16px; }
+a { color: var(--accent); }
+
+/* The stage is visually bare: no radius, shadow, filter or opacity (woven-canvas rule 7). */
+#stage { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #000; }
+#tile-host, #tile-host canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+#tile-host canvas { will-change: transform; } /* from first paint (rule 4) */
+
+/* Opaque cover over the canvas until the first woven frame; hard cut, never a fade (rule 5). */
+#cover { position: absolute; inset: 0; background: var(--bg); display: flex; align-items: center; justify-content: center; }
+#cover[hidden] { display: none; }
+#cover p { color: var(--muted); font-size: 18px; margin: 0; padding: 0 16px; text-align: center; }
+
+/* 2D chrome over the weave: smaller than the tile, plain tint, no backdrop-filter (rules 8, 10). */
+#status { position: absolute; left: 12px; top: 12px; max-width: calc(100% - 24px); padding: 6px 10px;
+  border-radius: 8px; background: rgba(11, 12, 18, 0.88); border: 1px solid #ffffff26;
+  font: 12px/1.4 ui-monospace, SFMono-Regular, Menlo, monospace; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; background: var(--muted); }
+.dot.on { background: var(--ok); }
+.dot.off { background: var(--err); }
+
+#call { margin-top: 0; }
+#panel { margin-top: 18px; }
+#panel h1 { font-size: 22px; margin: 0 0 4px; }
+#intro { color: var(--muted); margin: 0 0 12px; max-width: 70ch; }
+.small { font-size: 13px; color: var(--muted); }
+#demo-buttons { display: flex; flex-wrap: wrap; gap: 8px; }
+button { font: 13px system-ui; padding: 7px 12px; border-radius: 8px; border: 1px solid #ffffff26;
+  background: #ffffff10; color: var(--fg); cursor: pointer; }
+button:hover { background: #ffffff1c; }
+#log { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; white-space: pre-wrap; }
+
+/* Kiosk mode (?kiosk): the stage fills the screen, no page furniture. */
+body.kiosk main { max-width: none; padding: 0; }
+body.kiosk #stage { height: 100vh; aspect-ratio: auto; }
+body.kiosk #panel { display: none; }

@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DisplayXR Dot Voice — display</title>
+<link rel="stylesheet" href="./style.css">
+</head>
+<body>
+<main>
+  <!-- The stage: one woven tile at a time. No CSS effects on #stage or its ancestors
+       (DisplayXR woven-canvas rule 7); the cover sits ON TOP of the canvas (rule 5). -->
+  <div id="stage">
+    <div id="tile-host"></div>
+    <div id="cover"><p id="cover-text">Waiting for a command…</p></div>
+    <div id="status" data-inline3d-overlay>
+      <span id="st-bridge" class="dot off"></span><span id="st-bridge-text">bridge: connecting</span>
+      · <span id="st-mode">detecting display</span>
+      · <span id="st-content">nothing showing</span>
+    </div>
+  </div>
+  <div id="call" hidden></div>
+
+  <section id="panel">
+    <h1>DisplayXR Dot Voice</h1>
+    <p id="intro">Ask an agent to show something and it appears here — glasses-free 3D in the
+      <a href="https://github.com/DisplayXR/displayxr-browser">DisplayXR Browser</a> on a 3D display,
+      plain 2D everywhere else.</p>
+    <div id="demo">
+      <p class="small">Try it without an agent:</p>
+      <div id="demo-buttons"></div>
+    </div>
+    <p class="small" id="log"></p>
+  </section>
+</main>
+
+<script type="importmap">
+{ "imports": {
+  "playcanvas": "https://cdn.jsdelivr.net/npm/playcanvas@2.22.3/build/playcanvas.mjs",
+  "meshoptimizer/decoder": "https://cdn.jsdelivr.net/npm/meshoptimizer@1.2.0/meshopt_decoder.mjs",
+  "@displayxr/inline3d": "https://cdn.jsdelivr.net/npm/@displayxr/inline3d@1.37.1/js/inline3d.js",
+  "@displayxr/inline3d/model": "https://cdn.jsdelivr.net/npm/@displayxr/inline3d@1.37.1/js/inline3d-model-entry.js",
+  "@displayxr/inline3d/splat/playcanvas": "https://cdn.jsdelivr.net/npm/@displayxr/inline3d@1.37.1/js/inline3d-splat-pc-entry.js",
+  "@displayxr/inline3d/call": "https://cdn.jsdelivr.net/npm/@displayxr/inline3d@1.37.1/js/inline3d-call.js"
+} }
+</script>
+<script type="module" src="./app.js"></script>
+</body>
+</html>
