@@ -80,12 +80,12 @@ export function registerTools(server: McpServer, deps: ToolDeps) {
 
   server.registerTool('start_call', {
     title: 'Open 3D video call',
-    description: 'Open the 3D video call lobby on the display. The camera and microphone only start after a person at the display clicks to join. Returns the invite link when available.',
+    description: 'Ask the person at the display to start a 3D video call. Shows a Start button there; the camera and microphone stay off until they press it.',
     inputSchema: z.object({}),
-    // openWorld: a joined call talks to the DisplayXR signalling service and to peers.
+    // openWorld: a started call talks to the DisplayXR signalling service and to peers.
     annotations: { readOnlyHint: false, destructiveHint: false, openWorldHint: true, idempotentHint: true },
-  }, async () => relay('start_call', {}, (r) =>
-    'The call lobby is open on the display; someone there must click to join.' + (r.state?.invite ? ` Invite link: ${r.state.invite}` : '')));
+  }, async () => relay('start_call', {}, () =>
+    'A Start 3D call button is showing on the display. The camera stays off until someone there presses it.'));
 
   server.registerTool('clear', {
     title: 'Clear display',

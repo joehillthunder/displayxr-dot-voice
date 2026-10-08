@@ -31,6 +31,9 @@ a { color: var(--accent); }
 .dot.off { background: var(--err); }
 
 #call { margin-top: 0; }
+.call-gate { padding: 28px 20px; border: 1px solid #ffffff26; border-radius: 10px; background: #ffffff08; }
+.call-gate p { margin: 0 0 14px; max-width: 60ch; }
+.call-gate button { margin-right: 8px; }
 #panel { margin-top: 18px; }
 #panel h1 { font-size: 22px; margin: 0 0 4px; }
 #intro { color: var(--muted); margin: 0 0 12px; max-width: 70ch; }

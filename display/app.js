@@ -78,7 +78,11 @@ function removeContent() {
 async function freshCanvas() {
   const canvas = document.createElement('canvas');
   $('tile-host').replaceChildren(canvas);
-  await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
+  // Two frames, but never hang: a hidden tab gets no animation frames at all.
+  await new Promise((r) => {
+    requestAnimationFrame(() => requestAnimationFrame(r));
+    setTimeout(r, 250);
+  });
   return canvas;
 }
 
@@ -112,17 +116,37 @@ async function setMode(mode) {
   return `display ${mode}`;
 }
 
+// addCall() opens the camera and microphone before it shows its lobby (for the preview), so the
+// agent's command only puts up a button. The SDK, and with it the camera, loads on a local click:
+// a remote agent can invite a person at the display to call, never turn the camera on itself.
 async function startCall() {
   removeContent();
   $('stage').hidden = true;
   $('call').hidden = false;
-  const { addCall } = await import('@displayxr/inline3d/call');
-  // ui: true shows the SDK lobby. Nothing opens the camera or microphone until a person at the
-  // display clicks to join — a remote agent can open the lobby, never the camera.
-  call = await addCall(wall, $('call'), { ui: true, autoJoin: false });
+  const gate = document.createElement('div');
+  gate.className = 'call-gate';
+  gate.innerHTML = '<p>An agent asked to start a 3D video call. The camera and microphone stay off until you press Start.</p>';
+  const start = document.createElement('button');
+  start.textContent = 'Start 3D call';
+  const cancel = document.createElement('button');
+  cancel.textContent = 'Not now';
+  gate.append(start, cancel);
+  $('call').replaceChildren(gate);
   S.content = { kind: 'call' };
-  call.on('joined', () => { S.invite = call.inviteLink(); pushState(); });
-  return 'call lobby open';
+  cancel.onclick = () => { clear().then(() => pushState()); };
+  start.onclick = async () => {
+    start.disabled = true;
+    try {
+      const { addCall } = await import('@displayxr/inline3d/call');
+      $('call').replaceChildren();
+      call = await addCall(wall, $('call'), { ui: true, autoJoin: false });
+      call.on('joined', () => { S.invite = call.inviteLink(); pushState(); });
+    } catch (e) {
+      log('call failed:', e?.message || e);
+      start.disabled = false;
+    }
+  };
+  return 'call prompt shown; waiting for a person at the display to press Start';
 }
 
 async function clear() {
@@ -180,9 +204,11 @@ function connect() {
     if (msg.type === 'welcome') { delay = 1000; renderStatus(true); log('connected to', BRIDGE_URL); pushState(); return; }
     if (msg.type !== 'command' || !HANDLERS[msg.cmd]) return;
     log('command', msg.cmd, JSON.stringify(msg.args || {}));
+    const t0 = performance.now();
     let reply;
     try {
       reply = { ok: true, message: await run(msg.cmd, msg.args) };
+      log('done', msg.cmd, `${Math.round(performance.now() - t0)} ms`);
     } catch (e) {
       reply = { ok: false, message: e?.message || String(e) };
       log('error', reply.message);
