@@ -1,0 +1,11 @@
+# Asset licenses
+
+| File | License | Source |
+|---|---|---|
+| models/astronaut.glb | CC0 1.0 | [Kenney Space Kit](https://kenney.nl/assets/space-kit) |
+| models/ambulance.glb | CC0 1.0 | [Kenney Car Kit](https://kenney.nl/assets/car-kit) |
+| models/apple.glb | CC0 1.0 | [Kenney Food Kit](https://kenney.nl/assets/food-kit) |
+| avocado (remote, not committed) | CC0 1.0 | [Khronos glTF-Sample-Assets @edc7c9e](https://github.com/KhronosGroup/glTF-Sample-Assets/tree/edc7c9e67c639d230715049ee31f9a96a6babbbe/Models/Avocado) |
+
+Splat: TODO. It will be generated procedurally by a script in this repo, so it carries no third-party license.
+The DisplayXR sample butterfly.sog is © World Labs and is **not** redistributable.
